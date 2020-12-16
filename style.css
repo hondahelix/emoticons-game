@@ -23,6 +23,15 @@
     100%{top: 180px}
 
 }
+.hidden{
+    opacity: 0;
+}
+.attack{
+    left: 100px;
+    top: 0px;
+    
+}
+
 
 #enemy{
     position: relative;
