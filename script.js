@@ -55,10 +55,34 @@ document.addEventListener('keydown', event => {
 
     var enemyLeft = parseInt(window.getComputedStyle(enemy).getPropertyValue("left"));
     var enemyTop = parseInt(window.getComputedStyle(enemy).getPropertyValue("top"));
+
+    var attackLeft = parseInt(window.getComputedStyle(attack).getPropertyValue("left"));
+    var attackTop = parseInt(window.getComputedStyle(attack).getPropertyValue("top"));
+    
+    if((enemyLeft > attackLeft-20 && enemyLeft < attackLeft+35) && enemyTop === attackTop+20){
+        //console.log("hit");
+        
+        enemyHp.hp = enemyHp.hp-1;
+        if(enemyLeft<645){
+            enemy.style.left = enemyLeft + 100+"px";
+        }
+        else{enemy.style.left = 745+"px"}
+        if(enemyHp.hp<=0){
+            alert("you win");
+            
+        }
+        else{
+            setHp(enemyHp);
+        }
+    }
     //console.log(charLeft,charTop,enemyLeft,enemyTop)
     if((charLeft > enemyLeft-30 && charLeft < enemyLeft+45) && charTop === enemyTop+20){
         //console.log("hit");
-        character.style.left = charLeft - 100+"px";
+        if(charLeft>100){
+            character.style.left = charLeft - 100+"px";
+        }
+        else{character.style.left = 10+"px"}
+        
         characterHp.hp = characterHp.hp-1;
         if(characterHp.hp<=0){
             alert("you lose");
