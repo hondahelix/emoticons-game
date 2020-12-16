@@ -1,4 +1,5 @@
 var character = document.getElementById("character");
+var enemy = document.getElementById("enemy");
 var attack = document.getElementById("attack");
 var interval;
 var both = 0;
@@ -7,11 +8,10 @@ var facing  = "right";
 var characterHp = {hp:5 , type:"characterHp"}
 var enemyHp = {hp:3 , type:"enemyHp"};
 
-setHp(characterHp);
-setHp(enemyHp);
 
 function setHp(data){
     let div = document.getElementById(data.type);
+    div.innerHTML = '';
     console.log(div);
     for(let i =0; i<data.hp; i++){
         var li = document.createElement("li");
@@ -20,6 +20,8 @@ function setHp(data){
         div.appendChild(li)
     }
 }
+setHp(characterHp);
+setHp(enemyHp);
 
 document.addEventListener('keydown', event => {
     event.preventDefault();
@@ -45,6 +47,29 @@ document.addEventListener('keydown', event => {
         }
     }
   });
+
+  const hitDetection = setInterval(function(){
+    //need to check it character is touching enemy
+    var charLeft = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
+    var charTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
+
+    var enemyLeft = parseInt(window.getComputedStyle(enemy).getPropertyValue("left"));
+    var enemyTop = parseInt(window.getComputedStyle(enemy).getPropertyValue("top"));
+    //console.log(charLeft,charTop,enemyLeft,enemyTop)
+    if((charLeft > enemyLeft-30 && charLeft < enemyLeft+45) && charTop === enemyTop+20){
+        //console.log("hit");
+        character.style.left = charLeft - 100+"px";
+        characterHp.hp = characterHp.hp-1;
+        if(characterHp.hp<=0){
+            alert("you lose");
+            
+        }
+        else{
+            setHp(characterHp);
+        }
+    }
+
+},10);
 
 function moveLeft(){
     var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
@@ -77,4 +102,5 @@ document.addEventListener('keyup', event => {
     both = 0;
     attack.classList.add("hidden");
 })
+
 

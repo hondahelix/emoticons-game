@@ -38,6 +38,7 @@ h1{
     100%{top: 230px}
 
 }
+
 .hidden{
     top: 0px;
     left: 0px;
@@ -81,7 +82,7 @@ h1{
 }
 
 
-.enemy{
+.enemy1{
     position: relative;
     top: 210px;
     left: 600px;
