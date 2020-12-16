@@ -1,26 +1,41 @@
 *{
-    padding:  0;
+    padding: 0;
     margin: 0;
+}
+#jumbotron{
+    height: 100px;
+    width: 100%;
+    background-color: gray;
+}
+h1{
+    margin-left: auto;
+    margin-right: auto;
+    width: 8em;
+    top: 50%;
+    
 }
 
 #game{
-    width: 580px;
-    height: 200px;
+    width: 800px;
+    height: 250px;
     border: 1px solid black;
+    margin: auto;
+
+    
 }
 #character{
     position: relative;
-    top: 180px;
+    top: 230px;
     left: 10px;
 }
 .jump{
     animation: jump 500ms;
 }
 @keyframes jump{
-    0%{top: 180px}
-    30%{top: 100px}
-    70%{top: 100px}
-    100%{top: 180px}
+    0%{top: 230px}
+    30%{top: 150px}
+    70%{top: 150px}
+    100%{top: 230px}
 
 }
 .hidden{
@@ -34,10 +49,40 @@
     top: 140px;
     
 }
+.heart{
+    /* position: relative; */
+    list-style-type: none;
+    top:50%;
+    float: left;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    transform-origin: 0 0;
+    transform: rotate(-90deg);
+}
+.hpContainer{
+    background-color: darkgray;
+    width: 800px;
+    height: 50px;
+    border: 1px solid black;
+    margin: auto;
+}
 
-
-#enemy{
+#characterHp{
     position: relative;
-    top: 160px;
-    left: 500px;
+    top:60%;
+    float: left;
+    color: red;
+}
+#enemyHp{
+    position: relative;
+    top:60%;
+    float: right;
+    color: green;
+}
+
+
+.enemy{
+    position: relative;
+    top: 210px;
+    left: 600px;
 }

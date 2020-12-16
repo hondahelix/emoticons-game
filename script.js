@@ -3,13 +3,23 @@ var attack = document.getElementById("attack");
 var interval;
 var both = 0;
 var facing  = "right";
-// function characterJump(){
-//     if(character.classList !== "animate"){
-//         character.classList.add("animate");
-//     }
-//     setTimeout(()=>{character.classList.remove("animate")},500);
-// }
 
+var characterHp = {hp:5 , type:"characterHp"}
+var enemyHp = {hp:3 , type:"enemyHp"};
+
+setHp(characterHp);
+setHp(enemyHp);
+
+function setHp(data){
+    let div = document.getElementById(data.type);
+    console.log(div);
+    for(let i =0; i<data.hp; i++){
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode("<3"));
+        li.setAttribute("class", "heart");
+        div.appendChild(li)
+    }
+}
 
 document.addEventListener('keydown', event => {
     event.preventDefault();
@@ -46,7 +56,7 @@ function moveLeft(){
 
 function moveRight(){
     var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
-    if(left<540){
+    if(left<760){
         character.style.left = left + 1+"px";
         facing  = "right";
     }
@@ -67,3 +77,4 @@ document.addEventListener('keyup', event => {
     both = 0;
     attack.classList.add("hidden");
 })
+
