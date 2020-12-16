@@ -11,8 +11,9 @@
 #character{
     position: relative;
     top: 180px;
+    left: 10px;
 }
-.animate{
+.jump{
     animation: jump 500ms;
 }
 @keyframes jump{
@@ -22,6 +23,7 @@
     100%{top: 180px}
 
 }
+
 #enemy{
     position: relative;
     top: 160px;
