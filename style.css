@@ -1,0 +1,29 @@
+*{
+    padding:  0;
+    margin: 0;
+}
+
+#game{
+    width: 580px;
+    height: 200px;
+    border: 1px solid black;
+}
+#character{
+    position: relative;
+    top: 180px;
+}
+.animate{
+    animation: jump 500ms;
+}
+@keyframes jump{
+    0%{top: 180px}
+    30%{top: 100px}
+    70%{top: 100px}
+    100%{top: 180px}
+
+}
+#enemy{
+    position: relative;
+    top: 160px;
+    left: 500px;
+}
