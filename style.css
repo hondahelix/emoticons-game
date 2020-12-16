@@ -24,11 +24,14 @@
 
 }
 .hidden{
+    top: 0px;
+    left: 0px;
     opacity: 0;
 }
-.attack{
-    left: 100px;
-    top: 0px;
+#attack{
+    position: relative;
+    left: 0px;
+    top: 140px;
     
 }
 

@@ -39,7 +39,7 @@ document.addEventListener('keydown', event => {
 function moveLeft(){
     var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
     if(left>0){
-        character.style.left = left - 2+"px";
+        character.style.left = left - 1+"px";
         facing  = "left";
     }
 }
@@ -47,7 +47,7 @@ function moveLeft(){
 function moveRight(){
     var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
     if(left<540){
-        character.style.left = left + 2+"px";
+        character.style.left = left + 1+"px";
         facing  = "right";
     }
     
@@ -55,16 +55,15 @@ function moveRight(){
 
 function handleAttack(){
     
-    // var startAttackLeft = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
-    // var startAttackTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
-    // attack.style.left = startAttackLeft + 15+ "px";
-    // attack.style.top = startAttackTop + "px";
-    //need to get this to move accross the board"
-    attack.classList.remove("hidden");
-
+    var startAttackLeft = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
+    var startAttackTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
+        attack.style.top = startAttackTop-40 + "px";
+        attack.style.left = startAttackLeft +40+ "px";
+        attack.classList.remove("hidden");
 }
 
 document.addEventListener('keyup', event => {
     clearInterval(interval);
     both = 0;
+    attack.classList.add("hidden");
 })
