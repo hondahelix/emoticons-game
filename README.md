@@ -2,7 +2,7 @@
 
 ## Description 
 
-[Deployed Link](https://hondahelix.github.io/emoticons-game/)
+Note: runs on google chrome but has bugs on other browsers. [Deployed Link](https://hondahelix.github.io/emoticons-game/)
 
 
 ![game gif](readme-images/emotcons-game-first.gif)
