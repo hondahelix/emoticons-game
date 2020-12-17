@@ -7,7 +7,7 @@ var facing  = "right";
 var gameRunning = true;
 
 var characterHp = {hp:5 , type:"characterHp"}
-var enemyHp = {hp:3 , type:"enemyHp"};
+var enemyHp = {hp:10 , type:"enemyHp"};
 
 var charLeft;
 var charTop;
@@ -109,10 +109,18 @@ if(gameRunning === true){
         }
         if((charLeft > enemyLeft-30 && charLeft < enemyLeft+45) && charTop === enemyTop+20){
             //console.log("hit");
-            if(charLeft>100){
+            if(charLeft>100 && facing ==="right"){
                 character.style.left = charLeft - 100+"px";
             }
-            else{character.style.left = 10+"px"}
+            else if(charLeft<100 && facing ==="right"){
+                character.style.left = 10+"px"
+            }
+            else if(charLeft<660 && facing ==="left"){
+                character.style.left = charLeft + 100+"px";
+            }
+            else if(charLeft>660 && facing ==="left"){
+                character.style.left = 760+"px";
+            }
             
             characterHp.hp = characterHp.hp-1;
             if(characterHp.hp<=0){

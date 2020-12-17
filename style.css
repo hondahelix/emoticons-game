@@ -2,20 +2,31 @@
     padding: 0;
     margin: 0;
 }
+body{
+    background-color: lightblue;
+}
 #jumbotron{
     height: 100px;
     width: 100%;
     background-color: gray;
 }
+.instructions{
+    position: absolute;
+    margin-left: 80px;
+    top: 250px
+    
+}
 h1{
+    position: relative;
     margin-left: auto;
     margin-right: auto;
     width: 8em;
-    top: 50%;
+    top: 30%;
     
 }
 
 #game{
+    background-color: white;
     width: 800px;
     height: 250px;
     border: 1px solid black;
