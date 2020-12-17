@@ -53,6 +53,7 @@ if(gameRunning === true){
         if(gameRunning === true){
             if (event.code === 'KeyW') {
             console.log('w pressed');
+            //makes sure not to keep adding class jump
             if(character.classList !== "jump"){
                 character.classList.add("jump");
                 }
@@ -96,7 +97,7 @@ if(gameRunning === true){
                 enemy.style.left = enemyLeft - 100+"px";
             }
             else if(enemyLeft<100 && facing ==="left"){
-                enemy.style.left = 30+"px"
+                enemy.style.left = 150+"px"
             }
  
         }
@@ -108,7 +109,6 @@ if(gameRunning === true){
             setHp(enemyHp);
         }
         if((charLeft > enemyLeft-30 && charLeft < enemyLeft+45) && charTop === enemyTop+20){
-            //console.log("hit");
             if(charLeft>100 && facing ==="right"){
                 character.style.left = charLeft - 100+"px";
             }
@@ -192,6 +192,7 @@ if(gameRunning === true){
 
         }
     }, 500);
+
 
     document.addEventListener('keyup', event => {
         if(gameRunning === true){
