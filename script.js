@@ -77,7 +77,7 @@ if(gameRunning === true){
 
     const hitDetection = setInterval(function(){
         //console.log(enemyTop);
-        if((enemyLeft > attackLeft-35 && enemyLeft < attackLeft+35) && enemyTop === attackTop+20){
+        if((enemyLeft > attackLeft-35 && enemyLeft < attackLeft+35) && enemyTop === attackTop+20 && facing ==="right"){
             //console.log("hit");
             enemyHp.hp = enemyHp.hp-1;
             if(enemyLeft<645 && facing ==="right"){
@@ -88,17 +88,18 @@ if(gameRunning === true){
             }
         }
         //need to get hit to work for facing left
-        // if( enemyTop === attackTop-20){
-        //     //console.log("hit");
-        //     enemyHp.hp = enemyHp.hp-1;
-        //     if(enemyLeft>100 && facing ==="left"){
-        //         enemy.style.left = enemyLeft - 100+"px";
-        //     }
-        //     else if(enemyLeft<100 && facing ==="left"){
-        //         enemy.style.left = 30+"px"
-        //     }
+        //console.log(enemyLeft);
+        if((enemyLeft < attackLeft+35 && enemyLeft > attackLeft -75) && enemyTop === attackTop && facing ==="left"){
+            console.log("hit");
+            enemyHp.hp = enemyHp.hp-1;
+            if(enemyLeft>100 && facing ==="left"){
+                enemy.style.left = enemyLeft - 100+"px";
+            }
+            else if(enemyLeft<100 && facing ==="left"){
+                enemy.style.left = 30+"px"
+            }
  
-        // }
+        }
         if(enemyHp.hp<=0){
             endGame("win");
             
@@ -127,7 +128,6 @@ if(gameRunning === true){
     },10);
 
     function moveLeft(){
-        attack.classList.add("leftAttack");
         var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
         if(left>0){
             character.style.left = left - 1+"px";
@@ -136,7 +136,6 @@ if(gameRunning === true){
     }
 
     function moveRight(){
-        attack.classList.remove("leftAttack");
         var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
         if(left<760){
             character.style.left = left + 1+"px";
@@ -159,6 +158,7 @@ if(gameRunning === true){
             console.log(startAttackTop)
             attack.style.top = startAttackTop -20 + "px";
             attack.style.left = startAttackLeft + "px";
+            attack.classList.add("leftAttack");
             attack.classList.remove("hidden");
         }
     }
@@ -188,6 +188,7 @@ if(gameRunning === true){
     document.addEventListener('keyup', event => {
         if(gameRunning === true){
             clearInterval(interval);
+            attack.classList.remove("leftAttack");
             both = 0;
             attack.classList.add("hidden");
             attack.style.left = -150+"px"
@@ -199,6 +200,7 @@ if(gameRunning === true){
         setHp(characterHp);
         setHp(enemyHp);
         gameRunning = false;
+        clearInterval(interval);
         clearInterval(checkPosition);
         clearInterval(hitDetection);
         clearInterval(enemyMovement);
