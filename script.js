@@ -37,7 +37,7 @@ if(gameRunning === true){
     function setHp(data){
         let div = document.getElementById(data.type);
         div.innerHTML = '';
-        console.log(div);
+        //console.log(div);
         for(let i =0; i<data.hp; i++){
             var li = document.createElement("li");
             li.appendChild(document.createTextNode("<3"));
@@ -76,21 +76,35 @@ if(gameRunning === true){
     });
 
     const hitDetection = setInterval(function(){
-        
-        if((enemyLeft > attackLeft-20 && enemyLeft < attackLeft+35) && enemyTop === attackTop+20){
+        //console.log(enemyTop);
+        if((enemyLeft > attackLeft-35 && enemyLeft < attackLeft+35) && enemyTop === attackTop+20){
             //console.log("hit");
             enemyHp.hp = enemyHp.hp-1;
-            if(enemyLeft<645){
+            if(enemyLeft<645 && facing ==="right"){
                 enemy.style.left = enemyLeft + 100+"px";
             }
-            else{enemy.style.left = 745+"px"}
-            if(enemyHp.hp<=0){
-                endGame("win");
-                
+            else if(enemyLeft>645 && facing ==="right"){
+                enemy.style.left = 745+"px"
             }
-            else{
-                setHp(enemyHp);
-            }
+        }
+        //need to get hit to work for facing left
+        // if( enemyTop === attackTop-20){
+        //     //console.log("hit");
+        //     enemyHp.hp = enemyHp.hp-1;
+        //     if(enemyLeft>100 && facing ==="left"){
+        //         enemy.style.left = enemyLeft - 100+"px";
+        //     }
+        //     else if(enemyLeft<100 && facing ==="left"){
+        //         enemy.style.left = 30+"px"
+        //     }
+ 
+        // }
+        if(enemyHp.hp<=0){
+            endGame("win");
+            
+        }
+        else{
+            setHp(enemyHp);
         }
         if((charLeft > enemyLeft-30 && charLeft < enemyLeft+45) && charTop === enemyTop+20){
             //console.log("hit");
@@ -113,6 +127,7 @@ if(gameRunning === true){
     },10);
 
     function moveLeft(){
+        attack.classList.add("leftAttack");
         var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
         if(left>0){
             character.style.left = left - 1+"px";
@@ -121,6 +136,7 @@ if(gameRunning === true){
     }
 
     function moveRight(){
+        attack.classList.remove("leftAttack");
         var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
         if(left<760){
             character.style.left = left + 1+"px";
@@ -133,15 +149,23 @@ if(gameRunning === true){
         
         var startAttackLeft = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
         var startAttackTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
+        if(facing === "right"){
             attack.style.top = startAttackTop-40 + "px";
             attack.style.left = startAttackLeft +40+ "px";
             attack.classList.remove("hidden");
+        }
+        else{
+            console.log(startAttackLeft)
+            console.log(startAttackTop)
+            attack.style.top = startAttackTop -20 + "px";
+            attack.style.left = startAttackLeft + "px";
+            attack.classList.remove("hidden");
+        }
     }
 
 
     const enemyMovement = setInterval(() => {
         var randomNum = Math.floor(Math.random() * 4);
-        var hitWall = false;
         if(randomNum === 0){
             if(enemy.classList !== "enemy1Jump"){
                 enemy.classList.add("enemy1Jump");

@@ -50,6 +50,10 @@ h1{
     top: 140px;
     
 }
+.leftAttack{
+    transform-origin: 0 0;
+    transform: rotate(180deg);
+}
 .heart{
     /* position: relative; */
     list-style-type: none;
