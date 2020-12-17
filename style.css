@@ -46,7 +46,7 @@ h1{
 }
 #attack{
     position: relative;
-    left: 0px;
+    left: -150px;
     top: 140px;
     
 }
@@ -86,4 +86,28 @@ h1{
     position: relative;
     top: 210px;
     left: 600px;
+}
+
+.enemy1Jump{
+    animation: enemy1Jump 500ms;
+}
+@keyframes enemy1Jump{
+    0%{top: 210px}
+    30%{top: 160px}
+    70%{top: 160px}
+    100%{top: 210px}
+
+}
+
+.win{
+    position: relative;
+    left: 350px;
+    font:bold;
+    font-size: x-large;
+}
+.lose{
+    position: relative;
+    left: 350px;
+    font:bold;
+    font-size: x-large;
 }

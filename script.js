@@ -4,127 +4,195 @@ var attack = document.getElementById("attack");
 var interval;
 var both = 0;
 var facing  = "right";
+var gameRunning = true;
 
 var characterHp = {hp:5 , type:"characterHp"}
 var enemyHp = {hp:3 , type:"enemyHp"};
 
+var charLeft;
+var charTop;
 
-function setHp(data){
-    let div = document.getElementById(data.type);
-    div.innerHTML = '';
-    console.log(div);
-    for(let i =0; i<data.hp; i++){
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode("<3"));
-        li.setAttribute("class", "heart");
-        div.appendChild(li)
-    }
-}
-setHp(characterHp);
-setHp(enemyHp);
+var enemyLeft;
+var enemyTop;
 
-document.addEventListener('keydown', event => {
-    event.preventDefault();
-    if (event.code === 'KeyW') {
-      console.log('w pressed');
-      if(character.classList !== "jump"){
-        character.classList.add("jump");
-        }
-        setTimeout(()=>{character.classList.remove("jump")},500);
+var attackLeft;
+var attackTop;
 
-    }
-    if((event.code === 'Space')){
-        handleAttack()
-    }
-    //catches to make sure both left and right not being pressed
-    if(both ===0){
-        both++;
-        if(event.code === 'KeyD'){
-            interval = setInterval(moveRight, 1);
-        }
-        if(event.code === 'KeyA'){
-            interval = setInterval(moveLeft, 1);
+
+if(gameRunning === true){
+
+    const checkPosition = setInterval(() => {
+
+        charLeft = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
+        charTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
+
+        enemyLeft = parseInt(window.getComputedStyle(enemy).getPropertyValue("left"));
+        enemyTop = parseInt(window.getComputedStyle(enemy).getPropertyValue("top"));
+
+        attackLeft = parseInt(window.getComputedStyle(attack).getPropertyValue("left"));
+        attackTop = parseInt(window.getComputedStyle(attack).getPropertyValue("top"));
+
+    }, 10);
+
+    function setHp(data){
+        let div = document.getElementById(data.type);
+        div.innerHTML = '';
+        console.log(div);
+        for(let i =0; i<data.hp; i++){
+            var li = document.createElement("li");
+            li.appendChild(document.createTextNode("<3"));
+            li.setAttribute("class", "heart");
+            div.appendChild(li)
         }
     }
-  });
+    setHp(characterHp);
+    setHp(enemyHp);
 
-  const hitDetection = setInterval(function(){
-    //need to check it character is touching enemy
-    var charLeft = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
-    var charTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
+    document.addEventListener('keydown', event => {
+        event.preventDefault();
+        if(gameRunning === true){
+            if (event.code === 'KeyW') {
+            console.log('w pressed');
+            if(character.classList !== "jump"){
+                character.classList.add("jump");
+                }
+                setTimeout(()=>{character.classList.remove("jump")},500);
 
-    var enemyLeft = parseInt(window.getComputedStyle(enemy).getPropertyValue("left"));
-    var enemyTop = parseInt(window.getComputedStyle(enemy).getPropertyValue("top"));
+            }
+            if((event.code === 'Space')){
+                handleAttack()
+            }
+            //catches to make sure both left and right not being pressed
+            if(both ===0){
+                both++;
+                if(event.code === 'KeyD'){
+                    interval = setInterval(moveRight, 1);
+                }
+                if(event.code === 'KeyA'){
+                    interval = setInterval(moveLeft, 1);
+                }
+            }
+        }
+    });
 
-    var attackLeft = parseInt(window.getComputedStyle(attack).getPropertyValue("left"));
-    var attackTop = parseInt(window.getComputedStyle(attack).getPropertyValue("top"));
-    
-    if((enemyLeft > attackLeft-20 && enemyLeft < attackLeft+35) && enemyTop === attackTop+20){
-        //console.log("hit");
+    const hitDetection = setInterval(function(){
         
-        enemyHp.hp = enemyHp.hp-1;
-        if(enemyLeft<645){
-            enemy.style.left = enemyLeft + 100+"px";
+        if((enemyLeft > attackLeft-20 && enemyLeft < attackLeft+35) && enemyTop === attackTop+20){
+            //console.log("hit");
+            enemyHp.hp = enemyHp.hp-1;
+            if(enemyLeft<645){
+                enemy.style.left = enemyLeft + 100+"px";
+            }
+            else{enemy.style.left = 745+"px"}
+            if(enemyHp.hp<=0){
+                endGame("win");
+                
+            }
+            else{
+                setHp(enemyHp);
+            }
         }
-        else{enemy.style.left = 745+"px"}
-        if(enemyHp.hp<=0){
-            alert("you win");
+        if((charLeft > enemyLeft-30 && charLeft < enemyLeft+45) && charTop === enemyTop+20){
+            //console.log("hit");
+            if(charLeft>100){
+                character.style.left = charLeft - 100+"px";
+            }
+            else{character.style.left = 10+"px"}
+            
+            characterHp.hp = characterHp.hp-1;
+            if(characterHp.hp<=0){
+                endGame("lose");
+                
+                
+            }
+            else{
+                setHp(characterHp);
+            }
+        }
+
+    },10);
+
+    function moveLeft(){
+        var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
+        if(left>0){
+            character.style.left = left - 1+"px";
+            facing  = "left";
+        }
+    }
+
+    function moveRight(){
+        var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
+        if(left<760){
+            character.style.left = left + 1+"px";
+            facing  = "right";
+        }
+        
+    }
+
+    function handleAttack(){
+        
+        var startAttackLeft = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
+        var startAttackTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
+            attack.style.top = startAttackTop-40 + "px";
+            attack.style.left = startAttackLeft +40+ "px";
+            attack.classList.remove("hidden");
+    }
+
+
+    const enemyMovement = setInterval(() => {
+        var randomNum = Math.floor(Math.random() * 4);
+        var hitWall = false;
+        if(randomNum === 0){
+            if(enemy.classList !== "enemy1Jump"){
+                enemy.classList.add("enemy1Jump");
+                }
+                setTimeout(()=>{enemy.classList.remove("enemy1Jump")},500);
+        }
+        else if(randomNum === 1 || randomNum === 3 ){
+            if(enemyLeft>10){
+                enemy.style.left = enemyLeft - 10+"px";
+            }
+            else{enemy.style.left = 30+"px"}
             
         }
+        else if(randomNum === 2  && enemyLeft<735){
+            enemy.style.left = enemyLeft + 10+"px";
+
+        }
+    }, 500);
+
+    document.addEventListener('keyup', event => {
+        if(gameRunning === true){
+            clearInterval(interval);
+            both = 0;
+            attack.classList.add("hidden");
+            attack.style.left = -150+"px"
+        }
+    })
+
+    function endGame(gameResults){
+        var game = document.getElementById("game");
+        setHp(characterHp);
+        setHp(enemyHp);
+        gameRunning = false;
+        clearInterval(checkPosition);
+        clearInterval(hitDetection);
+        clearInterval(enemyMovement);
+        if(gameResults === "win"){
+            var win = document.createElement("div");
+            win.appendChild(document.createTextNode("You Win!!!"));
+            win.setAttribute("class", "win");
+            game.appendChild(win);
+        }
         else{
-            setHp(enemyHp);
-        }
-    }
-    //console.log(charLeft,charTop,enemyLeft,enemyTop)
-    if((charLeft > enemyLeft-30 && charLeft < enemyLeft+45) && charTop === enemyTop+20){
-        //console.log("hit");
-        if(charLeft>100){
-            character.style.left = charLeft - 100+"px";
-        }
-        else{character.style.left = 10+"px"}
-        
-        characterHp.hp = characterHp.hp-1;
-        if(characterHp.hp<=0){
-            alert("you lose");
-            
-        }
-        else{
-            setHp(characterHp);
+            var lose = document.createElement("div");
+            lose.appendChild(document.createTextNode("You Lose :("));
+            lose.setAttribute("class", "lose");
+            game.appendChild(lose);
         }
     }
 
-},10);
-
-function moveLeft(){
-    var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
-    if(left>0){
-        character.style.left = left - 1+"px";
-        facing  = "left";
-    }
 }
 
-function moveRight(){
-    var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
-    if(left<760){
-        character.style.left = left + 1+"px";
-        facing  = "right";
-    }
-    
-}
-
-function handleAttack(){
-    
-    var startAttackLeft = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
-    var startAttackTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
-        attack.style.top = startAttackTop-40 + "px";
-        attack.style.left = startAttackLeft +40+ "px";
-        attack.classList.remove("hidden");
-}
-
-document.addEventListener('keyup', event => {
-    clearInterval(interval);
-    both = 0;
-    attack.classList.add("hidden");
-})
 
 
